@@ -6,7 +6,7 @@
   const select = {
     templateOf: {
       menuProduct: '#template-menu-product',
-      cartProduct: '#template-cart-product', // CODE ADDED
+      cartProduct: '#template-cart-product',
     },
     containerOf: {
       menu: '#product-list',
@@ -27,7 +27,7 @@
     },
     widgets: {
       amount: {
-        input: 'input.amount', // CODE CHANGED
+        input: 'input.amount',
         linkDecrease: 'a[href="#less"]',
         linkIncrease: 'a[href="#more"]',
       },
@@ -195,7 +195,7 @@
     constructor(element) {
       const thisWidget = this;
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.value);
+      thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
       console.log('AmountWidget:', thisWidget);
       console.log('constructor argument', element);
@@ -210,6 +210,7 @@
     setValue(value) {
       const thisWidget = this;
       const newValue = parseInt(value);
+      thisWidget.value = settings.amountWidget.defaultValue;
       /* TODO: Add validation */
       if (
         thisWidget.value !== newValue &&
@@ -219,8 +220,6 @@
       ) {
         thisWidget.value = newValue;
         thisWidget.announce();
-      } else if (isNaN(thisWidget.value)) {
-        thisWidget.value = settings.amountWidget.defaultValue;
       }
       thisWidget.input.value = thisWidget.value;
     }
