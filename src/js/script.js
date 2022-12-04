@@ -32,7 +32,7 @@
         linkIncrease: 'a[href="#more"]',
       },
     },
-    // CODE ADDED START
+
     cart: {
       productList: '.cart__order-summary',
       toggleTrigger: '.cart__summary',
@@ -51,7 +51,6 @@
       edit: '[href="#edit"]',
       remove: '[href="#remove"]',
     },
-    // CODE ADDED END
   };
 
   const classNames = {
@@ -59,11 +58,9 @@
       wrapperActive: 'active',
       imageVisible: 'active',
     },
-    // CODE ADDED START
     cart: {
       wrapperActive: 'active',
     },
-    // CODE ADDED END
   };
 
   const settings = {
@@ -71,19 +68,15 @@
       defaultValue: 1,
       defaultMin: 0,
       defaultMax: 10,
-    }, // CODE CHANGED
-    // CODE ADDED START
+    },
     cart: {
       defaultDeliveryFee: 20,
     },
-    // CODE ADDED END
   };
 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-    // CODE ADDED START
     cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
-    // CODE ADDED END
   };
 
   class Product {
@@ -202,7 +195,7 @@
     constructor(element) {
       const thisWidget = this;
       thisWidget.getElements(element);
-      thisWidget.setValue(settings.amountWidget.defaultValue);
+      thisWidget.setValue(thisWidget.value);
       thisWidget.initActions();
       console.log('AmountWidget:', thisWidget);
       console.log('constructor argument', element);
@@ -218,6 +211,9 @@
       const thisWidget = this;
       const newValue = parseInt(value);
       /* TODO: Add validation */
+      if (isNaN(thisWidget.value)) {
+        thisWidget.value = settings.amountWidget.defaultValue;
+      }
       if (
         thisWidget.value !== newValue &&
         !isNaN(newValue) &&
@@ -226,13 +222,15 @@
       ) {
         thisWidget.value = newValue;
         thisWidget.announce();
+      } else if (isNaN(thisWidget.value)) {
+        thisWidget.value = settings.amountWidget.defaultValue;
       }
       thisWidget.input.value = thisWidget.value;
     }
     initActions() {
       const thisWidget = this;
       thisWidget.input.addEventListener('change', function () {
-        thisWidget.setValue(thisWidget.value);
+        thisWidget.setValue(thisWidget.input.value);
       });
       thisWidget.linkDecrease.addEventListener('click', function (event) {
         event.preventDefault();
