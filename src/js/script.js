@@ -65,7 +65,7 @@
   const settings = {
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 0,
+      defaultMin: 1,
       defaultMax: 10,
     },
     cart: {
@@ -255,8 +255,7 @@
     }
     setValue(value) {
       const thisWidget = this;
-      const newValue = parseInt(value);
-      thisWidget.value = settings.amountWidget.defaultValue;
+      const newValue = value != '' ? parseInt(value) : settings.amountWidget.defaultValue;
       /* TODO: Add validation */
       if (
         thisWidget.value !== newValue &&
@@ -304,7 +303,7 @@
       thisCart.dom.wrapper = element;
       console.log('wrapper', thisCart.dom.wrapper);
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-      thisCart.dom.productList = document.querySelector(select.cart.productList);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
     initActions() {
       const thisCart = this;
@@ -314,16 +313,14 @@
       });
     }
     add(menuProduct) {
-      const thisProduct = this;
+      const thisCart = this;
       /* generate HTML based on temlate */
       const generatedHTML = templates.cartProduct(menuProduct);
       /* create element using utils.createElementFromHTML */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       //console.log('adding product', generatedHTML);
-      /* add element to menu */
-      const cartContainer = document.querySelector(select.cart.productList);
-      /* add element to menu */
-      cartContainer.appendChild(generatedDOM);
+      /* add element to cart */
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
 
