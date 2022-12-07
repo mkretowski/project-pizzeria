@@ -315,7 +315,7 @@
       thisCart.dom.productList.addEventListener('updated', function () {
         thisCart.update();
       });
-      thisCart.dom.productList.addEventListener('remove', function () {
+      thisCart.dom.productList.addEventListener('remove', function (event) {
         thisCart.remove(event.detail.cartProduct);
       });
     }
