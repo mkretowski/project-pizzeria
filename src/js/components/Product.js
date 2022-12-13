@@ -19,7 +19,6 @@ class Product {
     /* generate HTML based on temlate */
     const generatedHTML = templates.menuProduct(thisProduct.data);
     /* create element using utils.createElementFromHTML */
-    console.log(thisProduct.data);
     thisProduct.element = utils.createDOMFromHTML(generatedHTML);
     /* find menu container */
     const menuContainer = document.querySelector(select.containerOf.menu);
