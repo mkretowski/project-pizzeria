@@ -175,7 +175,6 @@
 
     &.booked {
       cursor: not-allowed;
-      color: lighten($color-dark, 40%);
 
       &::after {
         position: absolute;
@@ -187,6 +186,11 @@
         background: $color-dark;
         opacity: 0.4;
       }
+    }
+
+    &.selected {
+      background: $color-success;
+      color: lighten($color-dark, 40%);
     }
   }
 

@@ -7,9 +7,30 @@ import utils from '../utils.js';
 class Booking {
   constructor(element) {
     const thisBooking = this;
+    thisBooking.selectedTable = 0;
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
+  }
+  selectTable(event) {
+    const thisBooking = this;
+    const thisTable = event.target;
+    if (thisTable.classList.contains(classNames.booking.table)) {
+      if (!thisTable.classList.contains(classNames.booking.tableBooked)) {
+        if (thisTable.classList.contains(classNames.booking.tableSelected)) {
+          thisTable.classList.remove(classNames.booking.tableSelected);
+          thisBooking.selectedTable = 0;
+        } else {
+          if (thisBooking.selectedTable != 0) {
+            thisBooking.selectedTable.classList.remove(classNames.booking.tableSelected);
+          }
+          thisTable.classList.add(classNames.booking.tableSelected);
+          thisBooking.selectedTable = thisTable;
+        }
+      } else {
+        alert('This table is already booked!');
+      }
+    }
   }
   getData() {
     const thisBooking = this;
@@ -74,7 +95,7 @@ class Booking {
   }
   updateDOM() {
     const thisBooking = this;
-
+    thisBooking.selectedTable = 0;
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
     let allAvailable = false;
@@ -85,6 +106,8 @@ class Booking {
       allAvailable = true;
     }
     for (let table of thisBooking.dom.tables) {
+      table.classList.remove(classNames.booking.tableSelected);
+
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       if (!isNaN(tableId)) {
         tableId = parseInt(tableId);
@@ -111,6 +134,7 @@ class Booking {
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.wrapperTables = thisBooking.dom.wrapper.querySelector(select.booking.wrapperTables);
   }
   initWidgets() {
     const thisBooking = this;
@@ -121,7 +145,11 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
+    /* add selectTable as event listener for all tables */
+    thisBooking.dom.wrapperTables.addEventListener('click', function (event) {
+      event.preventDefault();
+      thisBooking.selectTable(event);
+    });
   }
 }
-
 export default Booking;
