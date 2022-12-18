@@ -67,9 +67,6 @@ class Cart {
     for (let price of thisCart.dom.totalPrice) {
       price.innerHTML = thisCart.totalPrice;
     }
-    console.log('totalNumber', thisCart.totalNumber);
-    console.log('subtotalPrice', thisCart.subtotalPrice);
-    console.log('thisCart.totalPrice', thisCart.totalPrice);
   }
   remove(product) {
     const thisCart = this;

@@ -6,7 +6,7 @@ import Booking from './components/Booking.js';
 const app = {
   initBooking: function () {
     const newBooking = new Booking(document.querySelector(select.containerOf.booking));
-    console.log('New Booking', newBooking);
+    console.log('new Booking', newBooking);
   },
   initPages: function () {
     const thisApp = this;
@@ -51,8 +51,6 @@ const app = {
     for (let productData in thisApp.data.products) {
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
-    /*const testProduct = new Product();
-      console.log('testProduct:', testProduct);*/
   },
   initData: function () {
     const thisApp = this;
@@ -68,7 +66,6 @@ const app = {
         /* execute initMenu method */
         thisApp.initMenu();
       });
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
   init: function () {
     const thisApp = this;

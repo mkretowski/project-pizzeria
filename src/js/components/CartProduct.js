@@ -47,7 +47,6 @@ class CartProduct {
     const thisCartProduct = this;
     thisCartProduct.dom.edit.addEventListener('click', function (event) {
       event.preventDefault();
-      //thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
     });
     thisCartProduct.dom.remove.addEventListener('click', function (event) {
       event.preventDefault();
