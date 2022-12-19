@@ -12,7 +12,6 @@ class Booking {
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
-    console.log(thisBooking.datePicker.value);
   }
   sendBooking() {
     const thisBooking = this;
@@ -36,8 +35,10 @@ class Booking {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     };
-    fetch(url, options);
-    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+    fetch(url, options).then(
+      thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table),
+      thisBooking.updateDOM()
+    );
   }
   addStarters(event) {
     const thisBooking = this;
