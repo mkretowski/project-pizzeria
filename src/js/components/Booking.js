@@ -8,9 +8,45 @@ class Booking {
   constructor(element) {
     const thisBooking = this;
     thisBooking.selectedTable = 0;
+    thisBooking.starters = [];
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
+    console.log(thisBooking.datePicker.value);
+  }
+  sendBooking() {
+    const thisBooking = this;
+    const url = settings.db.url + '/' + settings.db.booking;
+    const payload = {
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPicker.value,
+      table:
+        thisBooking.selectedTable != 0
+          ? parseInt(thisBooking.selectedTable.getAttribute(settings.booking.tableIdAttribute))
+          : thisBooking.selectedTable,
+      duration: thisBooking.hoursAmount.value,
+      ppl: thisBooking.peopleAmount.value,
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
+      starters: thisBooking.starters,
+    };
+    console.log(payload);
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    };
+    fetch(url, options);
+    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+  }
+  addStarters(event) {
+    const thisBooking = this;
+    const thisStarter = event.target;
+    if (!thisStarter.checked) {
+      thisBooking.starters.splice(thisBooking.starters.indexOf(thisStarter.value, 1));
+    } else {
+      thisBooking.starters.push(thisStarter.value);
+    }
   }
   selectTable(event) {
     const thisBooking = this;
@@ -95,7 +131,6 @@ class Booking {
   }
   updateDOM() {
     const thisBooking = this;
-    thisBooking.selectedTable = 0;
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
     let allAvailable = false;
@@ -106,13 +141,15 @@ class Booking {
       allAvailable = true;
     }
     for (let table of thisBooking.dom.tables) {
-      table.classList.remove(classNames.booking.tableSelected);
-
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       if (!isNaN(tableId)) {
         tableId = parseInt(tableId);
       }
       if (!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)) {
+        if (table.classList.contains(classNames.booking.tableSelected)) {
+          thisBooking.selectedTable = 0;
+          table.classList.remove(classNames.booking.tableSelected);
+        }
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
@@ -135,6 +172,10 @@ class Booking {
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.wrapperTables = thisBooking.dom.wrapper.querySelector(select.booking.wrapperTables);
+    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.allStarters = thisBooking.dom.wrapper.querySelector(select.booking.starters);
   }
   initWidgets() {
     const thisBooking = this;
@@ -145,10 +186,17 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
-    /* add selectTable as event listener for all tables */
     thisBooking.dom.wrapperTables.addEventListener('click', function (event) {
       event.preventDefault();
       thisBooking.selectTable(event);
+    });
+    thisBooking.dom.form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+    thisBooking.dom.allStarters.addEventListener('change', function (event) {
+      event.preventDefault();
+      thisBooking.addStarters(event);
     });
   }
 }
