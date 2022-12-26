@@ -124,7 +124,6 @@ class Product {
         product: thisProduct,
       },
     });
-
     thisProduct.element.dispatchEvent(event);
   }
   prepareCartProduct() {

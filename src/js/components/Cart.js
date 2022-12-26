@@ -71,8 +71,6 @@ class Cart {
   remove(product) {
     const thisCart = this;
     thisCart.products.splice(thisCart.products.indexOf(product), 1);
-    console.log(product);
-    console.log(product.dom.wrapper);
     product.dom.wrapper.remove();
     thisCart.update();
   }
@@ -91,7 +89,6 @@ class Cart {
     for (let prod of thisCart.products) {
       payload.products.push(prod.getData());
     }
-    console.log(payload);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

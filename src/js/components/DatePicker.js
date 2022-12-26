@@ -4,7 +4,8 @@ import { select, settings } from '../settings.js';
 
 class DatePicker extends BaseWidget {
   constructor(wrapper) {
-    const firstWorkDay = new Date().getDay() == 1 ? utils.addDays(new Date(), 1) : new Date();
+    const today = new Date();
+    const firstWorkDay = today.getDay() == 1 ? utils.addDays(today, 1) : today;
     super(wrapper, utils.dateToStr(firstWorkDay));
     const thisWidget = this;
     thisWidget.minDate = firstWorkDay;

@@ -29,7 +29,6 @@ class Booking {
       address: thisBooking.dom.address.value,
       starters: thisBooking.starters,
     };
-    console.log(payload);
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

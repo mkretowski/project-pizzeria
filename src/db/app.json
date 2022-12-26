@@ -242,5 +242,35 @@
       "ppl": 3,
       "starters": []
     }
+  ],
+  "homeGalleryImages": [
+    "images/home/pizza-4.jpg",
+    "images/home/pizza-5.jpg",
+    "images/home/pizza-6.jpg",
+    "images/home/pizza-7.jpg",
+    "images/home/pizza-8.jpg",
+    "images/home/pizza-9.jpg"
+  ],
+  "reviews": [
+    {
+      "image": "images/home/pizza-1.jpg",
+      "name": "Lorem Ipsum",
+      "text": "Sed posuere purus et erat tempus condimentum. Nam id ante at ante fermentum pretium vel in odio. Aliquam eu eleifend sem, laoreet vehicula lorem."
+    },
+    {
+      "image": "images/home/pizza-2.jpg",
+      "name": "Lorem Ipsum",
+      "text": "Sed posuere purus et erat tempus condimentum. Nam id ante at ante fermentum pretium vel in odio. Aliquam eu eleifend sem, laoreet vehicula lorem."
+    },
+    {
+      "image": "images/home/pizza-3.jpg",
+      "name": "Lorem Ipsum",
+      "text": "Sed posuere purus et erat tempus condimentum. Nam id ante at ante fermentum pretium vel in odio. Aliquam eu eleifend sem, laoreet vehicula lorem."
+    },
+    {
+      "image": "images/home/pizza-4.jpg",
+      "name": "Lorem Ipsum",
+      "text": "Sed posuere purus et erat tempus condimentum. Nam id ante at ante fermentum pretium vel in odio. Aliquam eu eleifend sem, laoreet vehicula lorem."
+    }
   ]
 }
